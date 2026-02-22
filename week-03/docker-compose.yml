@@ -1,0 +1,38 @@
+services:
+  messages:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: messages-svc-s16
+    ports:
+      - "8213:8213"
+    command: uvicorn app_messages:app --host 0.0.0.0 --port 8213
+    networks:
+      - backend
+
+  other:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: other-svc-s16
+    ports:
+      - "8214:8214"
+    command: uvicorn app_other:app --host 0.0.0.0 --port 8214
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:stable-alpine3.23-perl
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./infra/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - messages
+      - other
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
