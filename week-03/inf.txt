@@ -1,7 +1,0 @@
-python -m venv .venv && source .venv/bin/activate (в главной папке)
-pip install -r requirements.txt (для разработки)
-export GROUP=433
-export STUDENT_ID=s16
-
-docker compose up --build -d (в week03)
-make test WEEK=03 (в главной папке)
