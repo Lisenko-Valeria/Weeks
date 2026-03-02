@@ -1,1 +1,13 @@
 # В этом месте вам необходимо: опишите GraphQL схему
+type Device {
+  id: ID!
+  serial: String!
+}
+
+type Query {
+  devices: [Device!]!
+}
+
+type Mutation {
+  createDevice(serial: String!): Device!
+}
